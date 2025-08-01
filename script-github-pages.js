@@ -826,13 +826,6 @@ async function callContentGenerationChatCompletions(messages, chatId, variables,
 
 // 内容生成功能
 async function generateContent() {
-    // ===== 临时演示模式：显示"功能完善中"弹窗 =====
-    showComingSoonModal();
-    return;
-    // ===== 临时演示模式结束 =====
-    
-    // ===== 原有功能代码（已注释，可随时恢复） =====
-    /*
     // 安全获取DOM元素值，防止null错误
     const wordCountEl = document.getElementById('word-count');
     const topicEl = document.getElementById('topic');
@@ -915,7 +908,6 @@ async function generateContent() {
         
         checkLearningButtonStatus();
     }
-    */
 }
 
 // 使用对话接口生成内容
@@ -1478,7 +1470,13 @@ window.showConfigModal = showConfigModal;
 window.closeDynamicConfigModal = closeDynamicConfigModal;
 window.saveConfigDynamic = saveConfigDynamic;
 window.clearAllConfigDynamic = clearAllConfigDynamic;
-window.testApiConnectionDynamic = testApiConnectionDynamic; 
+window.testApiConnectionDynamic = testApiConnectionDynamic;
+window.showComingSoonModal = showComingSoonModal;
+window.closeComingSoonModal = closeComingSoonModal;
+window.showFullscreenModal = showFullscreenModal;
+window.closeFullscreenModal = closeFullscreenModal;
+window.showPrivacyModal = showPrivacyModal;
+window.closePrivacyModal = closePrivacyModal; 
 
 // 页面加载完成后的初始化
 document.addEventListener('DOMContentLoaded', async function() {
@@ -1650,5 +1648,42 @@ function closeComingSoonModal() {
         setTimeout(() => {
             modal.remove();
         }, 300);
+    }
+}
+
+// 全屏查看模态框
+function showFullscreenModal() {
+    const modal = document.getElementById('fullscreen-modal');
+    if (modal) {
+        modal.style.display = 'flex';
+        // 加载风格分析详情
+        const content = document.getElementById('fullscreen-content');
+        if (content && appState.styleOutput) {
+            content.innerHTML = marked.parse(appState.styleOutput);
+        }
+    }
+}
+
+// 关闭全屏模态框
+function closeFullscreenModal() {
+    const modal = document.getElementById('fullscreen-modal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// 显示隐私配置模态框
+function showPrivacyModal() {
+    const modal = document.querySelector('.privacy-modal');
+    if (modal) {
+        modal.style.display = 'flex';
+    }
+}
+
+// 关闭隐私配置模态框
+function closePrivacyModal() {
+    const modal = document.querySelector('.privacy-modal');
+    if (modal) {
+        modal.style.display = 'none';
     }
 } 
